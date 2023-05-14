@@ -1,39 +1,26 @@
-/*
-const express         = require('express')
-const mongoose        = require('mongoose')
-const rotaLogin       = require('./rotas/login')
-const rotaCadastro    = require('./rotas/cadastro')
-const rotaProduto     = require('./rotas/produto')
-const rotaEstoque     = require('./rotas/estoque')
-const loginMiddleware = require('./middleware/login_middleware')
-const app = express()
-const port = 3000
+const compression = require('compression');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const porta = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// Compress all HTTP responses
+app.use(compression());
 
-const trataLog = (req, res, next) => {
-  console.log("Metodo", req.method);  
-  console.log("URI", req.originalUrl);
-  next();
-  console.log("Status",res.statusCode);
-}
+app.use(cors());
+app.use(express.json()) // Tratar o bory do request como JSON
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(express.static(__dirname + '/public'));
 
-//Conexão com Mongo
-mongoose.connect('mongodb://127.0.0.1:27017/produtos')
-  .then(() => {
-    console.log("Conectado ao Mongo..");
-  }).catch((error) => { 
-    console.log("Erro>:", error) 
-  });
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
-app.use(trataLog);
+// Direciona rotas
+const  vendas = require('./rotas/vendas');
+app.use('/vendas', vendas);
 
-app.use('/api/cadastro', rotaCadastro);
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-*
-*
-*/
+// Servidor inciado
+app.listen(porta,() => 
+    console.log(`Iniciando servidor na porta ${porta}`)
+);
