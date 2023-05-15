@@ -9,5 +9,6 @@ rota.get('/confirmar/:hash_confirma', agendamentoController.confirma);
 rota.get('/periodo',  agendamentoController.busca_por_periodo);
 */
 rota.get('/', vendasController.busca);
+rota.post('/', vendasController.inserir)
 
 module.exports = rota;
