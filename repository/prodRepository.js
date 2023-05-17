@@ -11,14 +11,15 @@ const conexao = {
     password: 'admin'   
 };
 
-// Busca dados header venda
-exports.busca = async () => {
+// Busca dados produto
+exports.buscaProd = async (id_produto, chave_estab) => {
     const cliente = new Client(conexao);
-    const sql     = "SELECT * FROM vend_header";
-    
+    const sql     = "SELECT * FROM prod WHERE id_produto = $1 AND chave_estab = $2";
+    const values  = [id_produto, chave_estab];
+
     cliente.connect();    
         try{
-            const res = await cliente.query(sql);
+            const res = await cliente.query(sql, values);
             cliente.end();
             return (res.rows);
          }

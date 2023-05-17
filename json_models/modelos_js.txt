@@ -1,0 +1,9 @@
+--- Modelo de venda POST ---
+[
+    {
+        "nome_cliente":"generico",
+        "cpf":"888888888",
+        "id_produto":1,
+        "qtd":10
+    }
+]
